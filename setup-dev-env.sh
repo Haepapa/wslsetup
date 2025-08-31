@@ -93,6 +93,7 @@ validate_config() {
         "python.uv"
         "go.gvm"
         "nodejs.nvm"
+        "editors.vscode_code_command"
     )
     
     # Check each required config
@@ -230,6 +231,53 @@ else
 fi
 
 #==============================================================================
+# STEP 5: Setup VS Code 'code' command in WSL
+#==============================================================================
+if config_enabled "editors.vscode_code_command"; then
+    log_info "Step 5: Setting up VS Code 'code' command in WSL..."
+
+    # Use proper PowerShell syntax with -Command parameter
+    WIN_USER=$(/mnt/c/Windows/System32/WindowsPowerShell/v1.0//powershell.exe -Command "Write-Output \$env:UserName" 2>/dev/null | tr -d '\r\n' || true)
+    if [[ -z "$WIN_USER" ]]; then
+        log_error "Could not determine Windows username using powershell.exe."
+        log_warning "Try running 'powershell.exe -Command \"Write-Output \\\$env:UserName\"' in your WSL terminal to debug."
+    fi
+
+    if [[ -z "$WIN_USER" ]]; then
+        log_error "Aborting VS Code command setup due to missing Windows username."
+    else
+        log_info "Detected Windows username: $WIN_USER"
+
+        # Run code . to trigger VS Code server install (as original user)
+        if ! 'code . || true'; then
+            log_warning "The 'code .' command did not run successfully. Ensure VS Code is installed on Windows and available in PATH."
+        fi
+
+        # Add code function to .bashrc if not already present
+        if ! grep -q "/mnt/c/Users/$WIN_USER/AppData/Local/Programs/Microsoft\\ VS\\ Code/Code.exe" $ORIGINAL_HOME/.bashrc; then
+            echo "function code () {" >> $ORIGINAL_HOME/.bashrc
+            echo "  /mnt/c/Users/$WIN_USER/AppData/Local/Programs/Microsoft\\ VS\\ Code/Code.exe \"\$@\";" >> $ORIGINAL_HOME/.bashrc
+            echo "}" >> $ORIGINAL_HOME/.bashrc
+        else
+            log_info "VS Code bash function already present in .bashrc."
+        fi
+
+        # Source .bashrc and run code . again (as original user)
+        if ! sudo -u $ORIGINAL_USER bash -c "source $ORIGINAL_HOME/.bashrc && code . || true"; then
+            log_warning "The 'code' bash function did not run successfully after updating .bashrc. Check your .bashrc and VS Code installation."
+        fi
+
+        # Check if the code function is now available
+        if sudo -u $ORIGINAL_USER bash -c "type code &>/dev/null"; then
+            log_success "VS Code 'code' command setup completed."
+        else
+            log_warning "VS Code 'code' command function was added, but is not available in the current shell. Try opening a new terminal or run: source ~/.bashrc"
+        fi
+    fi
+else
+    log_warning "Skipping VS Code 'code' command setup (disabled in config)"
+fi
+#==============================================================================
 # FINALISATION
 #==============================================================================
 log_info "Finalising setup..."
@@ -252,6 +300,7 @@ echo ""
 log_info "To install specific versions:"
 log_info "  • gvm install go1.21.0 && gvm use go1.21.0 --default"
 log_info "  • nvm install node && nvm use node"
+
 
 #==============================================================================
 # EXTENSIBILITY SECTION

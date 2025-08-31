@@ -30,8 +30,10 @@ nodejs:
 # containers:
 #   docker: false            # Docker container platform
 #
-# editors:
-#   vscode: false            # Visual Studio Code via snap
+
+editors:
+  vscode: false              # Visual Studio Code via snap
+  vscode_code_command: true  # Setup VS Code 'code' command in WSL
 #
 # databases:
 #   postgresql: false        # PostgreSQL database
