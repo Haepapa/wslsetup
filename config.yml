@@ -1,0 +1,47 @@
+# Ubuntu WSL Development Environment Configuration
+# 
+# This file controls which software components are installed by the setup script.
+# Set each component to 'true' to install or 'false' to skip.
+# 
+# IMPORTANT: All software listed in the setup script MUST be present in this config file.
+# If you add new software to the script, you must also add it here.
+
+# Core system updates (recommended to keep enabled)
+system:
+  update_packages: true      # Update Ubuntu package lists
+  upgrade_packages: true     # Upgrade installed packages
+  install_essentials: true   # Install build-essential, curl, wget, git, etc.
+
+# Python development
+python:
+  uv: true                   # Modern Python package and project manager
+
+# Go development
+go:
+  gvm: true                  # Go Version Manager
+
+# Node.js development
+nodejs:
+  nvm: true                  # Node Version Manager
+
+# Additional software (examples for future extensions)
+# Uncomment and modify as needed when adding new software to the script
+#
+# containers:
+#   docker: false            # Docker container platform
+#
+# editors:
+#   vscode: false            # Visual Studio Code via snap
+#
+# databases:
+#   postgresql: false        # PostgreSQL database
+#   redis: false             # Redis cache
+#
+# cloud:
+#   aws_cli: false           # AWS Command Line Interface
+#   gcloud: false            # Google Cloud CLI
+#
+# languages:
+#   rust: false              # Rust programming language
+#   java: false              # OpenJDK
+#   dotnet: false            # .NET SDK

@@ -1,0 +1,68 @@
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Test files and directories
+test-output/
+*.test
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Cache directories
+.cache/
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+
+# Build artifacts
+dist/
+build/
+*.o
+*.so
+*.dylib
+*.dll
+
+# Package manager files (if testing installations)
+Pipfile.lock
+package-lock.json
+yarn.lock
+go.sum
+
+# Local configuration
+config.local.*
+settings.local.*
+
+# Downloaded files during testing
+downloads/
+installers/
