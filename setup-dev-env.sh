@@ -254,10 +254,8 @@ if config_enabled "editors.vscode_code_command"; then
         fi
 
         # Add code function to .bashrc if not already present
-        if ! grep -q "/mnt/c/Users/$WIN_USER/AppData/Local/Programs/Microsoft\\ VS\\ Code/Code.exe" $ORIGINAL_HOME/.bashrc; then
-            echo "function code () {" >> $ORIGINAL_HOME/.bashrc
-            echo "  /mnt/c/Users/$WIN_USER/AppData/Local/Programs/Microsoft\\ VS\\ Code/Code.exe \"\$@\";" >> $ORIGINAL_HOME/.bashrc
-            echo "}" >> $ORIGINAL_HOME/.bashrc
+        if ! grep -q "alias code='/mnt/c/Users/timot/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code'" $ORIGINAL_HOME/.bashrc; then
+            echo "alias code='/mnt/c/Users/timot/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code'" >> $ORIGINAL_HOME/.bashrc
         else
             log_info "VS Code bash function already present in .bashrc."
         fi
