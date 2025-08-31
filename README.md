@@ -1,6 +1,16 @@
 # Ubuntu WSL Development Environment Setup
 
 This repository contains an automated setup script for configuring Ubuntu under WSL (Windows Subsystem for Linux) as a complete software development environment.
+ reduce the number of features to be just the relevant/core features to the end user e.g. config, single command etc. do not include soft features/nice to haves like color, logging etc
+
+## ✨ Features
+
+- **Single command setup** - Run `sudo ./setup-dev-env.sh` and everything installs automatically
+- **YAML configuration** - Control what gets installed via `config.yml` without modifying the script
+- **Configuration validation** - Script ensures all software is explicitly configured before proceeding
+- **Safe execution** - Proper user/permission handling and can be run multiple times safely
+- **Easily extensible** - Clear templates for adding new software with enforced configuration
+
 
 ## 🚀 Quick Start
 
